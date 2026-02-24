@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "kemistry-c2e9e"
-  }
+    "default": "logontecho",
+    "staging": "logontecho"
+  },
+  "targets": {},
+  "etags": {}
 }
