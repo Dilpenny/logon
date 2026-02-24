@@ -1,0 +1,8 @@
+.header.fixed-header {
+    padding: 20px 0;
+    background-color: #ffc175;
+}
+.border-primary {
+    --bs-border-opacity: 1;
+    border-color: rgb(255 238 216) !important;
+}
