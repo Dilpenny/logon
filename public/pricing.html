@@ -455,15 +455,17 @@ async function initializePayment(amount){
     }
   );
     console.log(response);
-    const data = await response.json();
-    console.log(data);
-    elements = stripe.elements({
-      clientSecret: data.clientSecret
+    const session = await response.json();
+
+    // Redirect user to Stripe Checkout (popup/redirect)
+    const { error } = await stripe.redirectToCheckout({
+      sessionId: session.id
     });
 
-    const paymentElement = elements.create("payment");
-
-    paymentElement.mount("#payment-element");
+    if (error) {
+      console.error(error);
+      alert(error.message);
+    }
 }
 
 document
