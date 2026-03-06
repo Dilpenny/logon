@@ -10,9 +10,100 @@
   <link rel="stylesheet" href="../assets/libs/aos-master/dist/aos.css">
   <link rel="stylesheet" href="../assets/css/styles.css" />
 </head>
+<style>
+  /* Modal background */
+.modal{
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(4px);
+}
 
+/* Modal box */
+.modal-content{
+    background: #fff;
+    width: 400px;
+    max-width: 90%;
+    margin: 10% auto;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    animation: modalFade 0.3s ease;
+}
+
+/* Close button */
+.close-btn{
+    float: right;
+    font-size: 22px;
+    cursor: pointer;
+    color: #777;
+}
+
+.close-btn:hover{
+    color: #000;
+}
+
+/* Button style */
+.pay-btn{
+    background: #4CAF50;
+    border: none;
+    padding: 12px 20px;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+.pay-btn:hover{
+    background: #45a049;
+}
+
+/* Animation */
+@keyframes modalFade{
+    from{
+        transform: translateY(-40px);
+        opacity: 0;
+    }
+    to{
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+.modal{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.modal-content h2{
+    background: linear-gradient(90deg,#4facfe,#00f2fe);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+</style>
 <body>
-
+  <div class="modal">
+    <div class="modal-content">
+      <div class="d-flex gap-2">
+        <span class="close-btn">&times;</span>
+        <h4 class="title">Payment</h4>
+      </div>
+      <div class="successful d-none">
+        <p class="success-messsage">Complete your payment here.</p>
+        <button class="pay-btn">Ok</button>
+      </div>
+      <div class="failed d-none text-red">
+        <center>
+          <img src="assets/images/cancel.png" style="width: 200px" alt="">
+        </center>
+        <p class="text-center mt-2 cancel-messsage">Your payment was not successful.</p>
+      </div>
+    </div>
+  </div>
   <!-- Header -->
   <header class="header border-4 border-primary border-top position-fixed start-0 top-0 w-100">
     <div class="container">
@@ -181,7 +272,7 @@
                           </li>
                         </ul>
                       </div>
-                      <a href="javascript:void(0)" onclick="initializePayment(200000)" class="btn w-100 justify-content-center">
+                      <a href="javascript:void(0)" onclick="initializePayment(20000)" class="btn w-100 justify-content-center">
                         <span class="btn-text">$200 to Activate</span>
                         <iconify-icon icon="lucide:arrow-up-right"
                           class="btn-icon bg-white text-dark round-52 rounded-circle hstack justify-content-center fs-7 shadow-sm"></iconify-icon>
@@ -234,7 +325,7 @@
                           </li>
                         </ul>
                       </div>
-                      <a href="javascript:void(0)" onclick="initializePayment(300000)" class="btn w-100 justify-content-center">
+                      <a href="javascript:void(0)" onclick="initializePayment(30000)" class="btn w-100 justify-content-center">
                         <span class="btn-text">$300 to Activate</span>
                         <iconify-icon icon="lucide:arrow-up-right"
                           class="btn-icon bg-white text-dark round-52 rounded-circle hstack justify-content-center fs-7 shadow-sm"></iconify-icon>
@@ -288,7 +379,7 @@
                           </li>
                         </ul>
                       </div>
-                      <a href="javascript:void(0)" onclick="initializePayment(500000)" class="btn w-100 justify-content-center">
+                      <a href="javascript:void(0)" onclick="initializePayment(50000)" class="btn w-100 justify-content-center">
                         <span class="btn-text">$500 to Activate</span>
                         <iconify-icon icon="lucide:arrow-up-right"
                           class="btn-icon bg-white text-dark round-52 rounded-circle hstack justify-content-center fs-7 shadow-sm"></iconify-icon>
@@ -430,7 +521,44 @@
 </button>
 
 <div id="payment-message"></div>
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const title_el = document.querySelector(".title");
+if (params.has("payment-success")) {
+  openModal("Payment success parameter exists");
+  
+  const elSuccess = document.querySelector(".successful"); //cancel-messsage
+  const message_el = document.querySelector(".success-messsage");
+  message_el.innerHTML = params.get('payment-success');
+  title_el.innerHTML = 'Payment Successful';
+  elSuccess.classList.remove("d-none");
+  window.history.replaceState({}, document.title, window.location.pathname);
+}else if (params.has("payment-cancel")) {
+  openModal("Payment success parameter exists");
 
+  const elFailed = document.querySelector(".failed");
+  const message_el = document.querySelector(".cancel-messsage");
+  title_el.innerHTML = 'Payment Canceled';
+  message_el.innerHTML = params.get('payment-cancel');
+  elFailed.classList.remove("d-none");
+  window.history.replaceState({}, document.title, window.location.pathname);
+}else{
+  closeModal();
+}
+
+function openModal(message){
+  document.querySelector(".modal").style.display = "block";
+}
+
+// close
+document.querySelector(".close-btn").onclick = function(){
+  closeModal();
+}
+
+function closeModal(){
+  document.querySelector(".modal").style.display = "none";
+}
+</script>
 
   <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
   <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -443,6 +571,7 @@
   
 <script>
 let elements;
+// pk_test_51T7t02PAuub6spflfZUHfd91EED798lV14RmZajyKx9lhMqNWZlITcELIeimNl4xw2NfXu72nynRMqtWWxtFpodh00EQRkhfK7
 const stripe = Stripe("pk_live_51RIcU2Ai7uz2mr7FivqifFCBfgSTmnzFQYkYEIBnfTILf1Ar1DN0w6LSpoxztR2nsN6ymDnsJIDiWmO3WH7KDfgd00s6o1DD1V");
 async function initializePayment(amount){
   
