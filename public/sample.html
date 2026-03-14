@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hero Section</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+
+.hero {
+    min-height: 100vh;
+    background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.65)),
+                url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+.hero-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    opacity: 0.9;
+    max-width: 650px;
+}
+
+.hero-buttons .btn {
+    padding: 12px 28px;
+    font-weight: 500;
+}
+
+.glass-box {
+    backdrop-filter: blur(8px);
+    background: rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 40px;
+    border: 1px solid rgba(255,255,255,0.15);
+}
+
+</style>
+</head>
+
+<body>
+
+<section class="hero">
+  <div class="container">
+    <div class="row justify-content-center text-center">
+      
+      <div class="col-lg-8 glass-box">
+
+        <h1 class="hero-title mb-4">
+          Build Something <span class="text-warning">Extraordinary</span>
+        </h1>
+
+        <p class="hero-subtitle mx-auto mb-5">
+          Turn your ideas into powerful digital experiences. Modern design, clean code, and limitless possibilities — all starting here.
+        </p>
+
+        <div class="hero-buttons d-flex justify-content-center gap-3 flex-wrap">
+          <a href="#" class="btn btn-warning btn-lg shadow">
+            Get Started
+          </a>
+
+          <a href="#" class="btn btn-outline-light btn-lg">
+            Learn More
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
